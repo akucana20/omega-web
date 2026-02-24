@@ -44,6 +44,7 @@ const ServicesSection = ({ showAll = false }: ServicesSectionProps) => {
     djSingers: '/artists',
     decoration: '/decoration',
     smokefireworks: '/smoke-fireworks',
+    lighting: '/lighting',
   };
 
   // Show all services on homepage and services page

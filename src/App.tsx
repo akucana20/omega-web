@@ -18,6 +18,7 @@ import DecorationPage from "./pages/DecorationPage";
 import PhotographyPage from "./pages/PhotographyPage";
 import VideographyPage from "./pages/VideographyPage";
 import SmokeFireworksPage from "./pages/SmokeFireworksPage";
+import LightingPage from "./pages/LightingPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +46,7 @@ const App = () => (
             <Route path="/photography" element={<PhotographyPage />} />
             <Route path="/videography" element={<VideographyPage />} />
             <Route path="/smoke-fireworks" element={<SmokeFireworksPage />} />
+            <Route path="/lighting" element={<LightingPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

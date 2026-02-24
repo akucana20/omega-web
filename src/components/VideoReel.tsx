@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { Video, Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import reklamCover from '@/assets/reklam cover.jpg';
 
 // Video URL - served from public folder
 const VIDEO_URL = '/showreel.mp4';
@@ -9,7 +10,7 @@ const VideoReel = () => {
   const desktopVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const [isMobilePlaying, setIsMobilePlaying] = useState(true);
-  const [isDesktopPlaying, setIsDesktopPlaying] = useState(true);
+  const [isDesktopPlaying, setIsDesktopPlaying] = useState(false);
   const [isMobileMuted, setIsMobileMuted] = useState(true);
   const [isDesktopMuted, setIsDesktopMuted] = useState(true);
 
@@ -71,6 +72,7 @@ const VideoReel = () => {
             <video
               ref={mobileVideoRef}
               className="w-full h-full object-cover"
+              poster={reklamCover}
               preload="auto"
               playsInline
               loop
@@ -119,11 +121,11 @@ const VideoReel = () => {
               <video
                 ref={desktopVideoRef}
                 className="w-full h-full object-cover"
+                poster={reklamCover}
                 preload="auto"
                 playsInline
                 loop
                 muted={isDesktopMuted}
-                autoPlay
                 onClick={toggleDesktopPlay}
               >
                 <source src={VIDEO_URL} type="video/mp4" />
