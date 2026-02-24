@@ -112,13 +112,13 @@ const translations: Record<Language, Translations> = {
     },
     services: {
       title: 'Shërbimet Tona',
-      subtitle: 'Gjithçka që ju nevojitet për një ngjarje të paharrueshme',
+      subtitle: 'Gjithçka që ju nevojitet për një event të paharrueshme',
       photography: 'Fotografi',
-      photographyDesc: 'Fotografi profesionale për të kapur çdo moment të veçantë të ngjarjes tuaj',
+      photographyDesc: 'Fotografi profesionale për të kapur çdo moment të veçantë të eventit tuaj',
       videography: 'Videografi',
       videographyDesc: 'Video cilësi të lartë për të ruajtur kujtimet tuaja përgjithmonë',
       decoration: 'Dekor & Dekorim',
-      decorationDesc: 'Dekorime elegante dhe të personalizuara për ngjarjen tuaj',
+      decorationDesc: 'Dekorime elegante dhe të personalizuara për eventin tuaj',
       dj: 'DJ & Muzikë',
       djDesc: 'Muzikë e gjallë dhe DJ profesional për atmosferë të shkëlqyer',
       singers: 'Këngëtarët',
@@ -130,7 +130,7 @@ const translations: Record<Language, Translations> = {
       lighting: 'Ndriçim Profesional',
       lightingDesc: 'Ndriçim dhe efekte dritash për atmosferë perfekte',
       venues: 'Sallë eventesh',
-      venuesDesc: 'Partneritet me sallat më të mira të ngjarjeve në Shqipëri',
+      venuesDesc: 'Partneritet me sallat më të mira të eventve në Shqipëri',
       viewAllCta: 'Shiko të Gjitha'
     },
     packages: {
@@ -159,11 +159,11 @@ const translations: Record<Language, Translations> = {
     },
     partners: {
       title: 'Sallat e Eventeve',
-      subtitle: 'Bashkëpunojmë me sallat më të mira të ngjarjeve'
+      subtitle: 'Bashkëpunojmë me sallat më të mira të eventve'
     },
     contact: {
       title: 'Na Kontaktoni',
-      subtitle: 'Jemi të gatshëm të planifikojmë ngjarjen tuaj të paharrueshme',
+      subtitle: 'Jemi të gatshëm të planifikojmë eventin tuaj të paharrueshme',
       phone: 'Telefon',
       email: 'Email',
       whatsapp: 'Dërgoni Mesazh në WhatsApp'

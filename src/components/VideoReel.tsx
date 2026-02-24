@@ -9,10 +9,12 @@ const VideoReel = () => {
   const mobileVideoRef = useRef<HTMLVideoElement | null>(null);
   const desktopVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  const [isMobilePlaying, setIsMobilePlaying] = useState(true);
+  // Start videos paused; user must press play
+  const [isMobilePlaying, setIsMobilePlaying] = useState(false);
   const [isDesktopPlaying, setIsDesktopPlaying] = useState(false);
-  const [isMobileMuted, setIsMobileMuted] = useState(true);
-  const [isDesktopMuted, setIsDesktopMuted] = useState(true);
+  // Start videos unmuted so that the first time they are played, sound is enabled
+  const [isMobileMuted, setIsMobileMuted] = useState(false);
+  const [isDesktopMuted, setIsDesktopMuted] = useState(false);
 
   const toggleMobilePlay = () => {
     const video = mobileVideoRef.current;
@@ -77,7 +79,6 @@ const VideoReel = () => {
               playsInline
               loop
               muted={isMobileMuted}
-              autoPlay
               onClick={toggleMobilePlay}
             >
               <source src={VIDEO_URL} type="video/mp4" />

@@ -14,6 +14,8 @@ import ylliImg from '@/assets/ylli baka.jpg';
 import klodianImg from '@/assets/Klodian Gjondrekaj.jpg';
 import erikImg from '@/assets/erik lloshin.jpg';
 import fatjonImg from '@/assets/fation dervishi.jpg';
+import noraImg from '@/assets/NORA NDREU1.jpg';
+import mirditImg from '@/assets/mirdit toma.jpg';
 
 const ArtistsPage = () => {
   const { t } = useLanguage();
@@ -58,11 +60,20 @@ const ArtistsPage = () => {
       type: 'singer' as const,
       image: mariglenImg,
     },
-   
     {
       name: 'Daniela Kovaci',
       type: 'singer' as const,
       image: danielaImg,
+    },
+    {
+      name: 'Nora Ndreu',
+      type: 'singer' as const,
+      image: noraImg,
+    },
+    {
+      name: 'Mirdit Toma',
+      type: 'singer' as const,
+      image: mirditImg,
     },
     {
       name: 'Pavlin Kola',
