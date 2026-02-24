@@ -2,6 +2,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Video } from 'lucide-react';
+import logoPink from '@/assets/logo pink.png';
 
 const VideographyPage = () => {
   const { t } = useLanguage();
@@ -40,7 +41,7 @@ const VideographyPage = () => {
                     <video
                       src={video}
                       controls
-                      poster="/logo.png"
+                      poster={logoPink}
                       className="w-full h-full object-cover"
                       preload="metadata"
                     >

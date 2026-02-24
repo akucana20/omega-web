@@ -2,8 +2,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Sparkles } from 'lucide-react';
-import videographyVideo from '@/assets/1.jpg';
-import logoPink from '@/assets/1.jpg';
+import logoPink from '@/assets/logo pink.png';
 
 const SmokeFireworksPage = () => {
   const { t } = useLanguage();
@@ -34,7 +33,7 @@ const SmokeFireworksPage = () => {
               <div className="group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-border bg-card">
                 <div className="relative aspect-video overflow-hidden bg-muted">
                   <video
-                    src={videographyVideo}
+                    src="/IMG_9550.MOV"
                     controls
                     poster={logoPink}
                     className="w-full h-full object-cover"

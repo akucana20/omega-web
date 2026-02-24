@@ -2,13 +2,11 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Building2, MapPin, Play } from 'lucide-react';
-import diademaImg from '@/assets/1.jpg';
-import freskiaImg from '@/assets/1.jpg';
-import rranxaImg from '@/assets/1.jpg';
-import colisImg from '@/assets/1.jpg';
-import diademaVideo from '@/assets/1.jpg';
-import rranxaVideo from '@/assets/1.jpg';
-import logoPink from '@/assets/1.jpg';
+import diademaImg from '@/assets/event hall - diadema.jpg';
+import freskiaImg from '@/assets/event hall - Freskia.jpg';
+import rranxaImg from '@/assets/event hall - rranxa.jpg';
+import colisImg from '@/assets/event hall - colis.jpg';
+import logoPink from '@/assets/logo pink.png';
 import { useState } from 'react';
 
 const VenuesPage = () => {
@@ -20,7 +18,7 @@ const VenuesPage = () => {
       location: 'Lezhë',
       description: 'DIADEMA në Lezhë është një sallë dasmash që shquhet për stilin e saj të veçantë dhe atmosferën elegante që ofron. Ambienti i rafinuar, ndriçimi i kuruar dhe organizimi profesional e kthejnë çdo event në një përvojë unike. Çdo detaj është menduar për të reflektuar klas, shije dhe emocione të paharrueshme. DIADEMA është zgjedhja perfekte për ata që kërkojnë një dasmë finesë.',
       image: diademaImg,
-      video: diademaVideo,
+      video: '/diadema%20video.mp4',
     },
     {
       name: 'FRESKIA',
@@ -34,7 +32,7 @@ const VenuesPage = () => {
       location: 'Shkodër',
       description: 'Rranxa Event është një nga sallat e dasmave më të sugjeruara në Shkodër, e njohur për elegancën, ambientin luksoz dhe shërbimin profesional. Me një dizajn modern dhe hapësira të kuruara në detaje, Rranxa Event krijon atmosferën perfekte për ditën tuaj më të rëndësishme. Stafi i përkushtuar kujdeset që çdo moment të jetë i organizuar me përpikmëri dhe stil. Zgjidhja ideale për një dasmë të paharrueshme në zemër të Shkodrës.',
       image: rranxaImg,
-      video: rranxaVideo,
+      video: '/RRANXA%20EVENT%20VIDEO.mp4',
     },
     {
       name: 'COLIS EVENT',
