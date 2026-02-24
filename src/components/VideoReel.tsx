@@ -1,94 +1,57 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { Video, Play, Pause, Volume2, VolumeX } from 'lucide-react';
-import reklamVideo from '@/assets/1.jpg';
-import reklamCover from '@/assets/1.jpg';
+
+// Video URL - served from public folder
+const VIDEO_URL = '/showreel.mp4';
 
 const VideoReel = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const desktopVideoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isDesktopPlaying, setIsDesktopPlaying] = useState(false);
-  const [isDesktopMuted, setIsDesktopMuted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const mobileVideoRef = useRef<HTMLVideoElement | null>(null);
+  const desktopVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const [isMobilePlaying, setIsMobilePlaying] = useState(true);
+  const [isDesktopPlaying, setIsDesktopPlaying] = useState(true);
+  const [isMobileMuted, setIsMobileMuted] = useState(true);
+  const [isDesktopMuted, setIsDesktopMuted] = useState(true);
 
-  useEffect(() => {
-    // Ensure video starts playing when component mounts (mobile only)
-    if (isMobile && videoRef.current) {
-      const playPromise = videoRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch(() => {
-            // Autoplay was prevented
-            setIsPlaying(false);
-          });
-      }
-    }
-  }, [isMobile]);
+  const toggleMobilePlay = () => {
+    const video = mobileVideoRef.current;
+    if (!video) return;
 
-  const togglePlayPause = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
+    if (video.paused) {
+      video.play();
+      setIsMobilePlaying(true);
+    } else {
+      video.pause();
+      setIsMobilePlaying(false);
     }
   };
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
+  const toggleDesktopPlay = () => {
+    const video = desktopVideoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play();
+      setIsDesktopPlaying(true);
+    } else {
+      video.pause();
+      setIsDesktopPlaying(false);
     }
   };
 
-  const handleVideoClick = () => {
-    if (isMobile) {
-      togglePlayPause();
-    }
-  };
-
-  const toggleDesktopPlayPause = () => {
-    if (desktopVideoRef.current) {
-      if (isDesktopPlaying) {
-        desktopVideoRef.current.pause();
-      } else {
-        desktopVideoRef.current.play();
-      }
-      setIsDesktopPlaying(!isDesktopPlaying);
-    }
+  const toggleMobileMute = () => {
+    const video = mobileVideoRef.current;
+    if (!video) return;
+    video.muted = !isMobileMuted;
+    setIsMobileMuted(!isMobileMuted);
   };
 
   const toggleDesktopMute = () => {
-    if (desktopVideoRef.current) {
-      desktopVideoRef.current.muted = !isDesktopMuted;
-      setIsDesktopMuted(!isDesktopMuted);
-    }
+    const video = desktopVideoRef.current;
+    if (!video) return;
+    video.muted = !isDesktopMuted;
+    setIsDesktopMuted(!isDesktopMuted);
   };
-
-  const handleDesktopVideoClick = () => {
-    toggleDesktopPlayPause();
-  };
-
-  const handlePlay = () => setIsPlaying(true);
-  const handlePause = () => setIsPlaying(false);
-  const handleDesktopPlay = () => setIsDesktopPlaying(true);
-  const handleDesktopPause = () => setIsDesktopPlaying(false);
 
   return (
     <section className="py-24 bg-background">
@@ -105,130 +68,97 @@ const VideoReel = () => {
           
           {/* Mobile: Vertical Reel Style */}
           <div className="relative overflow-hidden bg-black md:hidden aspect-[9/16] max-w-sm mx-auto rounded-2xl">
-              <video
-                ref={videoRef}
-                src={reklamVideo}
-                poster={reklamCover}
-                className="w-full h-full object-cover"
-                preload="auto"
-                onClick={handleVideoClick}
-                onPlay={handlePlay}
-                onPause={handlePause}
-                playsInline
-                autoPlay
-                loop
-                muted={isMuted}
-                disablePictureInPicture
-                controlsList="nodownload nofullscreen noremoteplayback"
-              >
-                Your browser does not support the video tag.
-              </video>
-              
-              {/* Custom Controls Overlay for Mobile */}
-              <>
-                {/* Play/Pause Button - Only visible when paused */}
-                {!isPlaying && (
-                  <button
-                    onClick={togglePlayPause}
-                    className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity z-10"
-                    aria-label="Play"
-                  >
-                    <div className="bg-white/90 rounded-full p-4 hover:scale-110 transition-transform">
-                      <Play className="h-12 w-12 text-primary fill-primary" />
-                    </div>
-                  </button>
+            <video
+              ref={mobileVideoRef}
+              className="w-full h-full object-cover"
+              preload="auto"
+              playsInline
+              loop
+              muted={isMobileMuted}
+              autoPlay
+              onClick={toggleMobilePlay}
+            >
+              <source src={VIDEO_URL} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Center Play/Pause button like Instagram Reels */}
+            <button
+              type="button"
+              onClick={toggleMobilePlay}
+              className="absolute inset-0 flex items-center justify-center bg-black/0 active:bg-black/20 transition-colors"
+              aria-label={isMobilePlaying ? 'Pause video' : 'Play video'}
+            >
+              <div className="bg-black/50 rounded-full p-4">
+                {isMobilePlaying ? (
+                  <Pause className="h-10 w-10 text-white fill-white" />
+                ) : (
+                  <Play className="h-10 w-10 text-white fill-white" />
                 )}
-                
-                {/* Pause Button - Only visible when playing (on tap) */}
-                {isPlaying && (
-                  <button
-                    onClick={togglePlayPause}
-                    className="absolute inset-0 flex items-center justify-center bg-transparent transition-opacity z-10 opacity-0 active:opacity-100"
-                    aria-label="Pause"
-                  >
-                    <div className="bg-black/40 rounded-full p-3 transition-transform">
-                      <Pause className="h-8 w-8 text-white fill-white" />
-                    </div>
-                  </button>
-                )}
-                
-                {/* Mute Button - Always visible in corner */}
-                <button
-                  onClick={toggleMute}
-                  className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2.5 transition-colors z-20"
-                  aria-label={isMuted ? 'Unmute' : 'Mute'}
-                >
-                  {isMuted ? (
-                    <VolumeX className="h-5 w-5 text-white" />
-                  ) : (
-                    <Volume2 className="h-5 w-5 text-white" />
-                  )}
-                </button>
-              </>
+              </div>
+            </button>
+
+            {/* Mute button bottom-right */}
+            <button
+              type="button"
+              onClick={toggleMobileMute}
+              className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2.5 transition-colors"
+              aria-label={isMobileMuted ? 'Unmute video' : 'Mute video'}
+            >
+              {isMobileMuted ? (
+                <VolumeX className="h-5 w-5 text-white" />
+              ) : (
+                <Volume2 className="h-5 w-5 text-white" />
+              )}
+            </button>
           </div>
 
-          {/* Desktop: Instagram Reel Style - Clean, No Background Card */}
+          {/* Desktop: Video Reel Style */}
           <div className="hidden md:flex md:justify-center md:items-center">
-            <div className="relative aspect-[9/16] w-full max-w-lg overflow-hidden bg-black">
+            <div className="relative aspect-[9/16] w-full max-w-lg overflow-hidden bg-black rounded-2xl">
               <video
                 ref={desktopVideoRef}
-                src={reklamVideo}
-                poster={reklamCover}
                 className="w-full h-full object-cover"
-                preload="metadata"
-                onClick={handleDesktopVideoClick}
-                onPlay={handleDesktopPlay}
-                onPause={handleDesktopPause}
+                preload="auto"
                 playsInline
                 loop
                 muted={isDesktopMuted}
-                disablePictureInPicture
-                controlsList="nodownload nofullscreen noremoteplayback"
+                autoPlay
+                onClick={toggleDesktopPlay}
               >
+                <source src={VIDEO_URL} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-              
-              {/* Custom Controls Overlay for Desktop */}
-              <>
-                {/* Play/Pause Button - Only visible when paused */}
-                {!isDesktopPlaying && (
-                  <button
-                    onClick={toggleDesktopPlayPause}
-                    className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity z-10"
-                    aria-label="Play"
-                  >
-                    <div className="bg-white/90 rounded-full p-4 hover:scale-110 transition-transform">
-                      <Play className="h-12 w-12 text-primary fill-primary" />
-                    </div>
-                  </button>
-                )}
-                
-                {/* Pause Button - Only visible when playing (on tap) */}
-                {isDesktopPlaying && (
-                  <button
-                    onClick={toggleDesktopPlayPause}
-                    className="absolute inset-0 flex items-center justify-center bg-transparent transition-opacity z-10 opacity-0 active:opacity-100"
-                    aria-label="Pause"
-                  >
-                    <div className="bg-black/40 rounded-full p-3 transition-transform">
-                      <Pause className="h-8 w-8 text-white fill-white" />
-                    </div>
-                  </button>
-                )}
-                
-                {/* Mute Button - Always visible in corner */}
-                <button
-                  onClick={toggleDesktopMute}
-                  className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2.5 transition-colors z-20"
-                  aria-label={isDesktopMuted ? 'Unmute' : 'Mute'}
-                >
-                  {isDesktopMuted ? (
-                    <VolumeX className="h-5 w-5 text-white" />
+
+              {/* Center Play/Pause button like Instagram Reels */}
+              <button
+                type="button"
+                onClick={toggleDesktopPlay}
+                className="absolute inset-0 flex items-center justify-center bg-black/0 hover:bg-black/10 active:bg-black/20 transition-colors"
+                aria-label={isDesktopPlaying ? 'Pause video' : 'Play video'}
+              >
+                <div className="bg-black/50 rounded-full p-4">
+                  {isDesktopPlaying ? (
+                    <Pause className="h-10 w-10 text-white fill-white" />
                   ) : (
-                    <Volume2 className="h-5 w-5 text-white" />
+                    <Play className="h-10 w-10 text-white fill-white" />
                   )}
-                </button>
-              </>
+                </div>
+              </button>
+
+              {/* Mute button bottom-right */}
+              <button
+                type="button"
+                onClick={toggleDesktopMute}
+                className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 rounded-full p-2.5 transition-colors"
+                aria-label={isDesktopMuted ? 'Unmute video' : 'Mute video'}
+              >
+                {isDesktopMuted ? (
+                  <VolumeX className="h-5 w-5 text-white" />
+                ) : (
+                  <Volume2 className="h-5 w-5 text-white" />
+                )}
+              </button>
             </div>
           </div>
         </div>
@@ -238,4 +168,3 @@ const VideoReel = () => {
 };
 
 export default VideoReel;
-
