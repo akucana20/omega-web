@@ -3,7 +3,7 @@ import { Video, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import reklamCover from '@/assets/reklam cover.jpg';
 
 // Video URL - served from public folder
-const VIDEO_URL = '/showreel.mp4';
+const VIDEO_URL = 'https://fxxenlsettps35yw.public.blob.vercel-storage.com/PREZANTIMI%20I%20WEBSITE.mp4', type='video/mp4';
 
 const VideoReel = () => {
   const mobileVideoRef = useRef<HTMLVideoElement | null>(null);
