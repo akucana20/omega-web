@@ -33,12 +33,12 @@ const SmokeFireworksPage = () => {
               <div className="group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-border bg-card">
                 <div className="relative aspect-video overflow-hidden bg-muted">
                   <video
-                    src="/IMG_9550.MOV"
                     controls
                     poster={logoPink}
                     className="w-full h-full object-cover"
                     preload="metadata"
                   >
+                    <source src="https://fxxenlsettps35yw.public.blob.vercel-storage.com/IMG_9550%20%281%29.mov" type="video/quicktime" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
