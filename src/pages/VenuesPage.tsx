@@ -18,7 +18,7 @@ const VenuesPage = () => {
       location: 'Lezhë',
       description: 'DIADEMA në Lezhë është një sallë dasmash që shquhet për stilin e saj të veçantë dhe atmosferën elegante që ofron. Ambienti i rafinuar, ndriçimi i kuruar dhe organizimi profesional e kthejnë çdo event në një përvojë unike. Çdo detaj është menduar për të reflektuar klas, shije dhe emocione të paharrueshme. DIADEMA është zgjedhja perfekte për ata që kërkojnë një dasmë finesë.',
       image: diademaImg,
-      video: '/diadema%20video.mp4',
+      video: 'https://fxxenlsettps35yw.public.blob.vercel-storage.com/diadema%20video.mp4',
     },
     {
       name: 'FRESKIA',
@@ -32,7 +32,7 @@ const VenuesPage = () => {
       location: 'Shkodër',
       description: 'Rranxa Event është një nga sallat e dasmave më të sugjeruara në Shkodër, e njohur për elegancën, ambientin luksoz dhe shërbimin profesional. Me një dizajn modern dhe hapësira të kuruara në detaje, Rranxa Event krijon atmosferën perfekte për ditën tuaj më të rëndësishme. Stafi i përkushtuar kujdeset që çdo moment të jetë i organizuar me përpikmëri dhe stil. Zgjidhja ideale për një dasmë të paharrueshme në zemër të Shkodrës.',
       image: rranxaImg,
-      video: '/RRANXA%20EVENT%20VIDEO.mp4',
+      video: 'https://fxxenlsettps35yw.public.blob.vercel-storage.com/RRANXA%20EVENT%20VIDEO.mp4',
     },
     {
       name: 'COLIS EVENT',
@@ -120,7 +120,7 @@ const VenueCard = ({ venue }: VenueCardProps) => {
             poster={logoPink}
             onEnded={() => setShowVideo(false)}
           >
-            <source src={venue.video} type="video/mp4" />
+            <source src={venue.video} type="video/quicktime" />
             Your browser does not support the video tag.
           </video>
         ) : (
