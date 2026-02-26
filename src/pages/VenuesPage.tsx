@@ -120,7 +120,7 @@ const VenueCard = ({ venue }: VenueCardProps) => {
             poster={logoPink}
             onEnded={() => setShowVideo(false)}
           >
-            <source src={venue.video} type="video/quicktime" />
+            <source src={venue.video} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         ) : (

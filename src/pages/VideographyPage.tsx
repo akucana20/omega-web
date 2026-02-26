@@ -7,7 +7,11 @@ import logoPink from '@/assets/logo pink.png';
 const VideographyPage = () => {
   const { t } = useLanguage();
 
-  const videos = ['/videoklipi 1.mp4', '/videoklipi 2.mp4', '/videoklipi 3.mp4'];
+  const videos = [
+    'https://fxxenlsettps35yw.public.blob.vercel-storage.com/videoklipi%201.mp4',
+    'https://fxxenlsettps35yw.public.blob.vercel-storage.com/videoklipi%202.mp4',
+    'https://fxxenlsettps35yw.public.blob.vercel-storage.com/videoklipi%203.mp4',
+  ];
 
   return (
     <div className="min-h-screen font-montserrat">
