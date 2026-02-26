@@ -130,7 +130,7 @@ const translations: Record<Language, Translations> = {
       lighting: 'Ndriçim Profesional',
       lightingDesc: 'Ndriçim dhe efekte dritash për atmosferë perfekte',
       venues: 'Sallë eventesh',
-      venuesDesc: 'Partneritet me sallat më të mira të eventve në Shqipëri',
+      venuesDesc: 'Partneritet me sallat më të mira të eventeve në Shqipëri',
       viewAllCta: 'Shiko të Gjitha'
     },
     packages: {
@@ -159,7 +159,7 @@ const translations: Record<Language, Translations> = {
     },
     partners: {
       title: 'Sallat e Eventeve',
-      subtitle: 'Bashkëpunojmë me sallat më të mira të eventve'
+      subtitle: 'Bashkëpunojmë me sallat më të mira të eventeve'
     },
     contact: {
       title: 'Na Kontaktoni',
