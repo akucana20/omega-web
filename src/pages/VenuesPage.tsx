@@ -1,7 +1,7 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Building2, MapPin, Play, Maximize2, X } from 'lucide-react';
+import { Building2, MapPin, Play } from 'lucide-react';
 import diademaImg from '@/assets/event hall - diadema.jpg';
 import freskiaImg from '@/assets/event hall - Freskia.jpg';
 import rranxaImg from '@/assets/event hall - rranxa.jpg';
@@ -18,7 +18,7 @@ const VenuesPage = () => {
       location: 'Lezhë',
       description: 'DIADEMA në Lezhë është një sallë dasmash që shquhet për stilin e saj të veçantë dhe atmosferën elegante që ofron. Ambienti i rafinuar, ndriçimi i kuruar dhe organizimi profesional e kthejnë çdo event në një përvojë unike. Çdo detaj është menduar për të reflektuar klas, shije dhe emocione të paharrueshme. DIADEMA është zgjedhja perfekte për ata që kërkojnë një dasmë finesë.',
       image: diademaImg,
-      video: 'https://youtube.com/shorts/Q0Ms3PF2xBg?feature=share',
+      video: 'https://fxxenlsettps35yw.public.blob.vercel-storage.com/diadema%20video.mp4',
     },
     {
       name: 'FRESKIA',
@@ -105,153 +105,65 @@ interface VenueCardProps {
   };
 }
 
-const getYouTubeEmbedUrl = (url: string) => {
-  try {
-    const parsed = new URL(url);
-
-    // Standard watch URL: https://www.youtube.com/watch?v=VIDEO_ID
-    const searchId = parsed.searchParams.get('v');
-    if (searchId) {
-      return `https://www.youtube.com/embed/${searchId}`;
-    }
-
-    // Shorts URL: https://youtube.com/shorts/VIDEO_ID
-    if (parsed.pathname.startsWith('/shorts/')) {
-      const idFromShorts = parsed.pathname.split('/shorts/')[1]?.split('/')[0];
-      if (idFromShorts) {
-        return `https://www.youtube.com/embed/${idFromShorts}`;
-      }
-    }
-
-    // Fallback: last non-empty path segment
-    const parts = parsed.pathname.split('/').filter(Boolean);
-    const lastSegment = parts[parts.length - 1];
-    if (lastSegment) {
-      return `https://www.youtube.com/embed/${lastSegment}`;
-    }
-
-    return url;
-  } catch {
-    return url;
-  }
-};
-
 const VenueCard = ({ venue }: VenueCardProps) => {
   const [showVideo, setShowVideo] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  const isYouTubeVideo =
-    !!venue.video &&
-    (venue.video.includes('youtube.com') || venue.video.includes('youtu.be'));
-
-  const youTubeEmbedUrl =
-    showVideo && isYouTubeVideo && venue.video
-      ? getYouTubeEmbedUrl(venue.video)
-      : null;
 
   return (
-    <>
-      {/* Fullscreen overlay for YouTube videos */}
-      {isFullscreen && youTubeEmbedUrl && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center">
-          <div className="relative w-full max-w-5xl aspect-video mx-4">
-            <button
-              type="button"
-              onClick={() => setIsFullscreen(false)}
-              className="absolute -top-10 right-0 text-white hover:text-muted-foreground transition-colors"
-              aria-label="Close fullscreen video"
-            >
-              <X className="h-8 w-8" />
-            </button>
-            <iframe
-              className="w-full h-full"
-              src={`${youTubeEmbedUrl}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0&playsinline=1`}
-              title={venue.name}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-              allowFullScreen
+    <div className="group relative bg-card rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-border">
+      {/* Image/Video Section */}
+      <div className="relative aspect-video overflow-hidden bg-muted">
+        {showVideo && venue.video ? (
+          <video
+            className="w-full h-full object-cover"
+            controls
+            autoPlay
+            poster={logoPink}
+            onEnded={() => setShowVideo(false)}
+          >
+            <source src={venue.video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <>
+            <img
+              src={venue.image}
+              alt={venue.name}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              loading="lazy"
+              decoding="async"
             />
-          </div>
-        </div>
-      )}
-
-      <div className="group relative bg-card rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-border">
-        {/* Image/Video Section */}
-        <div className="relative aspect-video overflow-hidden bg-muted">
-          {showVideo && venue.video ? (
-            youTubeEmbedUrl ? (
-              <>
-                <iframe
-                  className="w-full h-full"
-                  src={`${youTubeEmbedUrl}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1`}
-                  title={venue.name}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-                {/* Fullscreen button overlay for embedded YouTube */}
-                <button
-                  type="button"
-                  onClick={() => setIsFullscreen(true)}
-                  className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
-                  aria-label="Open video in fullscreen"
-                >
-                  <Maximize2 className="h-5 w-5" />
-                </button>
-              </>
-            ) : (
-              <video
-                className="w-full h-full object-cover"
-                controls
-                autoPlay
-                poster={logoPink}
-                onEnded={() => setShowVideo(false)}
+            {venue.video && (
+              <button
+                onClick={() => setShowVideo(true)}
+                className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/60 transition-colors"
+                aria-label="Play video"
               >
-                <source src={venue.video} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            )
-          ) : (
-            <>
-              <img
-                src={venue.image}
-                alt={venue.name}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                loading="lazy"
-                decoding="async"
-              />
-              {venue.video && (
-                <button
-                  type="button"
-                  onClick={() => setShowVideo(true)}
-                  className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/60 transition-colors"
-                  aria-label="Play video"
-                >
-                  <div className="bg-white/90 rounded-full p-4 hover:scale-110 transition-transform">
-                    <Play className="h-12 w-12 text-primary fill-primary" />
-                  </div>
-                </button>
-              )}
-            </>
-          )}
-        </div>
+                <div className="bg-white/90 rounded-full p-4 hover:scale-110 transition-transform">
+                  <Play className="h-12 w-12 text-primary fill-primary" />
+                </div>
+              </button>
+            )}
+          </>
+        )}
+      </div>
 
-        {/* Content Section */}
-        <div className="p-8">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <h3 className="text-3xl font-bold text-foreground mb-2">{venue.name}</h3>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <MapPin className="h-5 w-5" />
-                <span className="font-medium">{venue.location}</span>
-              </div>
+      {/* Content Section */}
+      <div className="p-8">
+        <div className="flex items-start justify-between mb-4">
+          <div>
+            <h3 className="text-3xl font-bold text-foreground mb-2">{venue.name}</h3>
+            <div className="flex items-center gap-2 text-muted-foreground">
+              <MapPin className="h-5 w-5" />
+              <span className="font-medium">{venue.location}</span>
             </div>
           </div>
-          
-          <p className="text-muted-foreground leading-relaxed text-lg">
-            {venue.description}
-          </p>
         </div>
+        
+        <p className="text-muted-foreground leading-relaxed text-lg">
+          {venue.description}
+        </p>
       </div>
-    </>
+    </div>
   );
 };
 
