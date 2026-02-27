@@ -18,7 +18,7 @@ const VenuesPage = () => {
       location: 'Lezhë',
       description: 'DIADEMA në Lezhë është një sallë dasmash që shquhet për stilin e saj të veçantë dhe atmosferën elegante që ofron. Ambienti i rafinuar, ndriçimi i kuruar dhe organizimi profesional e kthejnë çdo event në një përvojë unike. Çdo detaj është menduar për të reflektuar klas, shije dhe emocione të paharrueshme. DIADEMA është zgjedhja perfekte për ata që kërkojnë një dasmë finesë.',
       image: diademaImg,
-      video: 'https://fxxenlsettps35yw.public.blob.vercel-storage.com/diadema%20video.mp4',
+      video: 'https://youtube.com/shorts/Q0Ms3PF2xBg?feature=share',
     },
     {
       name: 'FRESKIA',
@@ -105,24 +105,74 @@ interface VenueCardProps {
   };
 }
 
+const getYouTubeEmbedUrl = (url: string) => {
+  try {
+    const parsed = new URL(url);
+
+    // Standard watch URL: https://www.youtube.com/watch?v=VIDEO_ID
+    const searchId = parsed.searchParams.get('v');
+    if (searchId) {
+      return `https://www.youtube.com/embed/${searchId}`;
+    }
+
+    // Shorts URL: https://youtube.com/shorts/VIDEO_ID
+    if (parsed.pathname.startsWith('/shorts/')) {
+      const idFromShorts = parsed.pathname.split('/shorts/')[1]?.split('/')[0];
+      if (idFromShorts) {
+        return `https://www.youtube.com/embed/${idFromShorts}`;
+      }
+    }
+
+    // Fallback: last non-empty path segment
+    const parts = parsed.pathname.split('/').filter(Boolean);
+    const lastSegment = parts[parts.length - 1];
+    if (lastSegment) {
+      return `https://www.youtube.com/embed/${lastSegment}`;
+    }
+
+    return url;
+  } catch {
+    return url;
+  }
+};
+
 const VenueCard = ({ venue }: VenueCardProps) => {
   const [showVideo, setShowVideo] = useState(false);
+
+  const isYouTubeVideo =
+    !!venue.video &&
+    (venue.video.includes('youtube.com') || venue.video.includes('youtu.be'));
+
+  const youTubeEmbedUrl =
+    showVideo && isYouTubeVideo && venue.video
+      ? getYouTubeEmbedUrl(venue.video)
+      : null;
 
   return (
     <div className="group relative bg-card rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-border">
       {/* Image/Video Section */}
       <div className="relative aspect-video overflow-hidden bg-muted">
         {showVideo && venue.video ? (
-          <video
-            className="w-full h-full object-cover"
-            controls
-            autoPlay
-            poster={logoPink}
-            onEnded={() => setShowVideo(false)}
-          >
-            <source src={venue.video} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          youTubeEmbedUrl ? (
+            <iframe
+              className="w-full h-full"
+              src={`${youTubeEmbedUrl}?autoplay=1&mute=1`}
+              title={venue.name}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          ) : (
+            <video
+              className="w-full h-full object-cover"
+              controls
+              autoPlay
+              poster={logoPink}
+              onEnded={() => setShowVideo(false)}
+            >
+              <source src={venue.video} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          )
         ) : (
           <>
             <img
@@ -134,6 +184,7 @@ const VenueCard = ({ venue }: VenueCardProps) => {
             />
             {venue.video && (
               <button
+                type="button"
                 onClick={() => setShowVideo(true)}
                 className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/60 transition-colors"
                 aria-label="Play video"
