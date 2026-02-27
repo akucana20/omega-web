@@ -156,7 +156,7 @@ const VenueCard = ({ venue }: VenueCardProps) => {
           youTubeEmbedUrl ? (
             <iframe
               className="w-full h-full"
-              src={`${youTubeEmbedUrl}?autoplay=1&mute=1`}
+              src={`${youTubeEmbedUrl}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1`}
               title={venue.name}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
