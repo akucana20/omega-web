@@ -16,6 +16,7 @@ import erikImg from '@/assets/erik lloshin.jpg';
 import fatjonImg from '@/assets/fation dervishi.jpg';
 import noraImg from '@/assets/NORA NDREU1.jpg';
 import mirditImg from '@/assets/mirdit toma.jpg';
+import leardoImg from '@/assets/LEARDO BITRAJ 1.jpg';
 
 const ArtistsPage = () => {
   const { t } = useLanguage();
@@ -84,6 +85,11 @@ const ArtistsPage = () => {
       name: 'Klodian Gjondrekaj',
       type: 'singer' as const,
       image: klodianImg,
+    },
+    {
+      name: 'Leardo Bitraj',
+      type: 'singer' as const,
+      image: leardoImg,
     },
 
     {
