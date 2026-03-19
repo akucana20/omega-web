@@ -246,6 +246,8 @@ sketch
 *.webm
 *.WEBM
 !public/showreel.mp4
+!public/diadema-venue.mp4
+!public/rranxa-venue.mp4
 src/assets/CLIP KUJTIM & ANA *.mp4
 src/assets/RRANXA EVENT VIDEO.mp4
 src/assets/diadema video.mp4
