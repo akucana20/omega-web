@@ -2,16 +2,37 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Video } from 'lucide-react';
-import logoPink from '@/assets/logo pink.png';
 
 const VideographyPage = () => {
   const { t } = useLanguage();
 
   const videos = [
-    'https://fxxenlsettps35yw.public.blob.vercel-storage.com/videoklipi%201.mp4',
-    'https://fxxenlsettps35yw.public.blob.vercel-storage.com/videoklipi%202.mp4',
-    'https://fxxenlsettps35yw.public.blob.vercel-storage.com/videoklipi%203.mp4',
+    'https://youtu.be/XnuIyY-Tg2Q',
+    'https://youtu.be/7abslbL_99o',
+    'https://youtu.be/PPrKSkOAZaM',
   ];
+
+  const getYouTubeEmbedUrl = (url: string) => {
+    try {
+      const parsedUrl = new URL(url);
+
+      if (parsedUrl.hostname.includes('youtu.be')) {
+        const videoId = parsedUrl.pathname.replace('/', '');
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+
+      if (parsedUrl.hostname.includes('youtube.com')) {
+        const videoId = parsedUrl.searchParams.get('v');
+        if (videoId) {
+          return `https://www.youtube.com/embed/${videoId}`;
+        }
+      }
+    } catch {
+      return '';
+    }
+
+    return '';
+  };
 
   return (
     <div className="min-h-screen font-montserrat">
@@ -42,15 +63,15 @@ const VideographyPage = () => {
                   className="group relative rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-border bg-card"
                 >
                   <div className="relative aspect-video overflow-hidden bg-muted">
-                    <video
-                      src={video}
-                      controls
-                      poster={logoPink}
-                      className="w-full h-full object-cover"
-                      preload="metadata"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
+                    <iframe
+                      src={getYouTubeEmbedUrl(video)}
+                      title={`Videography video ${index + 1}`}
+                      className="w-full h-full"
+                      loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
                   </div>
                 </div>
               ))}

@@ -18,7 +18,7 @@ const VenuesPage = () => {
       location: 'Lezhë',
       description: 'DIADEMA në Lezhë është një sallë dasmash që shquhet për stilin e saj të veçantë dhe atmosferën elegante që ofron. Ambienti i rafinuar, ndriçimi i kuruar dhe organizimi profesional e kthejnë çdo event në një përvojë unike. Çdo detaj është menduar për të reflektuar klas, shije dhe emocione të paharrueshme. DIADEMA është zgjedhja perfekte për ata që kërkojnë një dasmë finesë.',
       image: diademaImg,
-      video: 'https://fxxenlsettps35yw.public.blob.vercel-storage.com/diadema%20video.mp4',
+      video: 'https://youtube.com/shorts/SXtuP8ImnMY?feature=share',
     },
     {
       name: 'FRESKIA',
@@ -32,7 +32,7 @@ const VenuesPage = () => {
       location: 'Shkodër',
       description: 'Rranxa Event është një nga sallat e dasmave më të sugjeruara në Shkodër, e njohur për elegancën, ambientin luksoz dhe shërbimin profesional. Me një dizajn modern dhe hapësira të kuruara në detaje, Rranxa Event krijon atmosferën perfekte për ditën tuaj më të rëndësishme. Stafi i përkushtuar kujdeset që çdo moment të jetë i organizuar me përpikmëri dhe stil. Zgjidhja ideale për një dasmë të paharrueshme në zemër të Shkodrës.',
       image: rranxaImg,
-      video: 'https://fxxenlsettps35yw.public.blob.vercel-storage.com/RRANXA%20EVENT%20VIDEO.mp4',
+      video: 'https://youtube.com/shorts/XnDktCRPIXE?feature=share',
     },
     {
       name: 'COLIS EVENT',
@@ -107,22 +107,63 @@ interface VenueCardProps {
 
 const VenueCard = ({ venue }: VenueCardProps) => {
   const [showVideo, setShowVideo] = useState(false);
+  const getYouTubeEmbedUrl = (url: string) => {
+    try {
+      const parsedUrl = new URL(url);
+
+      if (parsedUrl.hostname.includes('youtu.be')) {
+        const videoId = parsedUrl.pathname.replace('/', '');
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+
+      if (parsedUrl.hostname.includes('youtube.com')) {
+        if (parsedUrl.pathname.includes('/shorts/')) {
+          const videoId = parsedUrl.pathname.split('/shorts/')[1]?.split('/')[0];
+          if (videoId) {
+            return `https://www.youtube.com/embed/${videoId}`;
+          }
+        }
+
+        const videoId = parsedUrl.searchParams.get('v');
+        if (videoId) {
+          return `https://www.youtube.com/embed/${videoId}`;
+        }
+      }
+    } catch {
+      return '';
+    }
+
+    return '';
+  };
+  const embedVideoUrl = venue.video ? getYouTubeEmbedUrl(venue.video) : '';
 
   return (
     <div className="group relative bg-card rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border border-border">
       {/* Image/Video Section */}
       <div className="relative aspect-video overflow-hidden bg-muted">
         {showVideo && venue.video ? (
-          <video
-            className="w-full h-full object-cover"
-            controls
-            autoPlay
-            poster={logoPink}
-            onEnded={() => setShowVideo(false)}
-          >
-            <source src={venue.video} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          embedVideoUrl ? (
+            <iframe
+              src={embedVideoUrl}
+              title={`${venue.name} video`}
+              className="w-full h-full"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          ) : (
+            <video
+              className="w-full h-full object-cover"
+              controls
+              autoPlay
+              poster={logoPink}
+              onEnded={() => setShowVideo(false)}
+            >
+              <source src={venue.video} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          )
         ) : (
           <>
             <img

@@ -15,8 +15,10 @@ import klodianImg from '@/assets/Klodian Gjondrekaj.jpg';
 import erikImg from '@/assets/erik lloshin.jpg';
 import fatjonImg from '@/assets/fation dervishi.jpg';
 import noraImg from '@/assets/NORA NDREU1.jpg';
-import mirditImg from '@/assets/mirdit toma.jpg';
+import mirditImg from '@/assets/mrdit toma (1).jpg';
 import leardoImg from '@/assets/LEARDO BITRAJ 1.jpg';
+import eliImg from '@/assets/ELI MALAJ.jpg';
+import altinImg from '@/assets/ALTIN SULKU.jpg';
 
 const ArtistsPage = () => {
   const { t } = useLanguage();
@@ -30,6 +32,16 @@ const ArtistsPage = () => {
       name: 'Sinan Hoxha',
       type: 'singer' as const,
       image: sinanImg,
+    },
+    {
+      name: 'Eli Malaj',
+      type: 'singer' as const,
+      image: eliImg,
+    },
+    {
+      name: 'Altin Sulku',
+      type: 'singer' as const,
+      image: altinImg,
     },
     {
       name: 'Ylli Baka',
