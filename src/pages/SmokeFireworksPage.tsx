@@ -38,7 +38,7 @@ const SmokeFireworksPage = () => {
                     className="w-full h-full object-cover"
                     preload="metadata"
                   >
-                    <source src="https://fxxenlsettps35yw.public.blob.vercel-storage.com/IMG_9550%20%281%29.mov" type="video/quicktime" />
+                    <source src="/smoke-fireworks.mov" type="video/quicktime" />
                     Your browser does not support the video tag.
                   </video>
                 </div>
